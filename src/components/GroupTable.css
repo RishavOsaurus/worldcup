@@ -1,29 +1,29 @@
 /* World Cup Stadium Design */
 
 .group-card {
-  background: #ffffff;
+  background: var(--bg-primary);
   border-radius: 12px;
-  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08);
+  box-shadow: 0 1px 3px var(--shadow-primary);
   overflow: hidden;
   transition: transform 0.2s ease, box-shadow 0.2s ease;
-  border: 1px solid #e5e7eb;
+  border: 1px solid var(--border-primary);
 }
 
 .group-card:hover {
   transform: translateY(-2px);
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.12);
+  box-shadow: 0 4px 12px var(--shadow-secondary);
 }
 
 .group-header {
-  background: #ffffff;
+  background: var(--bg-secondary);
   padding: 16px;
-  border-bottom: 1px solid #e5e7eb;
+  border-bottom: 1px solid var(--border-primary);
   position: relative;
 }
 
 .group-header h2 {
   margin: 0;
-  color: #111827;
+  color: var(--text-primary);
   font-size: 16px;
   font-weight: 700;
   letter-spacing: 0.3px;
@@ -33,12 +33,12 @@
 .group-table {
   width: 100%;
   border-collapse: collapse;
-  background-color: #fff;
+  background-color: var(--bg-primary);
 }
 
 .group-table thead {
-  background: #f9fafb;
-  border-bottom: 1px solid #e5e7eb;
+  background: var(--bg-tertiary);
+  border-bottom: 1px solid var(--border-secondary);
 }
 
 .group-table th {
@@ -46,7 +46,7 @@
   text-align: left;
   font-weight: 600;
   font-size: 11px;
-  color: #6b7280;
+  color: var(--text-secondary);
   text-transform: uppercase;
   letter-spacing: 0.8px;
 }
@@ -62,15 +62,15 @@
 }
 
 .group-table tbody tr {
-  background-color: #ffffff;
+  background-color: var(--bg-primary);
   transition: all 0.2s ease;
-  border-bottom: 1px solid #f3f4f6;
+  border-bottom: 1px solid var(--border-primary);
 }
 
 .group-table tbody tr:nth-child(1),
 .group-table tbody tr:nth-child(2) {
-  background: #ffffff;
-  border-left: 3px solid #6366f1;
+  background: var(--bg-secondary);
+  border-left: 3px solid var(--accent-primary);
 }
 
 .group-table tbody tr:last-child {
@@ -78,28 +78,28 @@
 }
 
 .group-table tbody tr:hover {
-  background-color: #f9fafb;
+  background-color: var(--bg-tertiary);
 }
 
 .group-table tbody tr.playoff-row {
-  background: #ffffff;
-  border-left: 3px solid #f97316;
+  background: var(--bg-primary);
+  border-left: 3px solid var(--text-muted);
 }
 
 .group-table tbody tr.playoff-row:hover {
-  background: #fef3f2;
+  background: var(--bg-secondary);
 }
 
 .group-table td {
   padding: 12px;
   font-size: 14px;
-  color: #1c1e21;
+  color: var(--text-primary);
 }
 
 .position {
   text-align: center;
   font-weight: 600;
-  color: #1c1e21;
+  color: var(--text-primary);
   font-size: 14px;
 }
 
@@ -107,7 +107,7 @@
   text-align: center;
   cursor: grab;
   user-select: none;
-  color: #d1d5db;
+  color: var(--text-muted);
   font-size: 18px;
   font-weight: 700;
   padding: 12px 8px;
@@ -119,13 +119,13 @@
 
 .drag-handle:active {
   cursor: grabbing;
-  color: #6366f1;
-  background: #e0e7ff;
+  color: var(--accent-primary);
+  background: var(--bg-tertiary);
 }
 
 .drag-handle:hover {
-  color: #9ca3af;
-  background: #f9fafb;
+  color: var(--text-secondary);
+  background: var(--bg-secondary);
   border-radius: 4px;
 }
 
@@ -140,7 +140,7 @@
   display: flex;
   align-items: center;
   gap: 10px;
-  color: #1c1e21;
+  color: var(--text-primary);
   font-weight: 500;
   font-size: 14px;
 }
@@ -151,7 +151,7 @@
 }
 
 .playoff-text {
-  color: #ea580c;
+  color: var(--text-muted);
   font-weight: 600;
   font-style: italic;
   font-size: 13px;

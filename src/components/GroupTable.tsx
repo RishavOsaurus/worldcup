@@ -23,16 +23,23 @@ import { CSS } from '@dnd-kit/utilities';
 
 interface GroupTableProps {
   group: Group;
+  onOrderChange?: (teams: (Team & { uniqueId: string })[]) => void;
 }
 
 interface SortableTeamRowProps {
-  team: Team;
+  team: Team & { uniqueId: string };
   index: number;
   id: string;
 }
 
 const DragHandle = ({ style }: { style?: CSSProperties }) => (
-  <span style={{ ...style, cursor: 'move', userSelect: 'none' }}>⠿</span>
+  <span
+    style={{ ...style, cursor: 'move', userSelect: 'none' }}
+    tabIndex={0}
+    aria-label="Drag handle"
+  >
+    ⠿
+  </span>
 );
 
 const SortableTeamRow = ({ team, index, id }: SortableTeamRowProps) => {
@@ -71,7 +78,7 @@ const SortableTeamRow = ({ team, index, id }: SortableTeamRowProps) => {
   );
 };
 
-export default function GroupTable({ group }: GroupTableProps) {
+export default function GroupTable({ group, onOrderChange }: GroupTableProps) {
   // Add stable IDs to teams when component mounts
   const [teams, setTeams] = useState<(Team & { uniqueId: string })[]>(() =>
     group.teams.map((team, idx) => ({ ...team, uniqueId: `${group.name}-${idx}` }))
@@ -104,7 +111,12 @@ export default function GroupTable({ group }: GroupTableProps) {
     setTeams((items) => {
       const oldIndex = items.findIndex((item) => item.uniqueId === active.id);
       const newIndex = items.findIndex((item) => item.uniqueId === over.id);
-      return arrayMove(items, oldIndex, newIndex);
+      const newTeams = arrayMove(items, oldIndex, newIndex);
+      
+      // Notify parent of order change
+      onOrderChange?.(newTeams);
+      
+      return newTeams;
     });
   };
 
