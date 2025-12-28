@@ -2,31 +2,28 @@ import './App.css';
 import { useState } from 'react';
 import GroupTable from './components/GroupTable';
 import ThemeToggle from './components/ThemeToggle';
-import ThirdPlaceModal from './components/ThirdPlaceModal';
+// import ThirdPlaceModal from './components/ThirdPlaceModal';
+import ThirdPlacePage from './components/ThirdPlacePage';
 import { worldCupGroups } from './data/groups';
 import type { Team } from './types/worldcup';
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import RoundOf32 from './components/RoundOf32';
 
-function App() {
+function HomeContent() {
   const [groupTeamOrders, setGroupTeamOrders] = useState<Record<string, (Team & { uniqueId: string })[]>>({});
-  const [thirdPlaceTeamOrder, setThirdPlaceTeamOrder] = useState<(Team & { groupName: string; uniqueId: string })[]>([]);
-  const [isModalOpen, setIsModalOpen] = useState(false);
+  // modal removed in favor of full page selector
 
-  // Get third place teams from current group orders
   const defaultThirdPlaceTeams = worldCupGroups
     .map(group => {
       const orderedTeams = groupTeamOrders[group.name];
       if (orderedTeams && orderedTeams.length >= 3) {
-        return { ...orderedTeams[2], groupName: group.name }; // 3rd place (index 2)
+        return { ...orderedTeams[2], groupName: group.name };
       }
-      // Default to original 3rd place if no reordering has happened
       return group.teams.length >= 3 ? { ...group.teams[2], groupName: group.name } : null;
     })
     .filter(Boolean) as (Team & { groupName: string })[];
 
-  // Use custom order if available, otherwise use default
-  const thirdPlaceTeams = thirdPlaceTeamOrder.length > 0 
-    ? thirdPlaceTeamOrder
-    : defaultThirdPlaceTeams;
+  const thirdPlaceTeams = defaultThirdPlaceTeams;
 
   const handleGroupOrderChange = (groupName: string, teams: (Team & { uniqueId: string })[]) => {
     setGroupTeamOrders(prev => ({
@@ -35,23 +32,15 @@ function App() {
     }));
   };
 
-  const handleThirdPlaceOrderChange = (teams: (Team & { uniqueId: string })[]) => {
-    // Since we're not formatting the names anymore, we can directly use the teams
-    // but we need to preserve the groupName information
-    const teamsWithGroupInfo = teams.map(team => {
-      // Find the original team data to get the groupName
-      const originalTeam = defaultThirdPlaceTeams.find(t => t.name === team.name);
-      return {
-        ...team,
-        groupName: originalTeam?.groupName || ''
-      };
-    });
-    setThirdPlaceTeamOrder(teamsWithGroupInfo);
+  
+
+  const navigateToThirdPlace = () => {
+    // persist draft so the page can read it
+    try { localStorage.setItem('thirdPlaceDraft', JSON.stringify(thirdPlaceTeams)); } catch {}
+    // navigate to dedicated page
+    window.location.href = '/third-place';
   };
 
-  const handleNext = () => {
-    setIsModalOpen(true);
-  };
   return (
     <div className="app-container">
       <header className="app-header">
@@ -60,7 +49,9 @@ function App() {
             <h1>FIFA World Cup 2026 Groups</h1>
             <p className="subtitle">Group Stage Draw - Drag to Reorder Teams!</p>
           </div>
-          <ThemeToggle />
+          <div style={{display: 'flex', gap: 12, alignItems: 'center'}}>
+            <ThemeToggle />
+          </div>
         </div>
       </header>
 
@@ -75,19 +66,23 @@ function App() {
       </div>
 
       <div className="navigation-section bottom-nav">
-        <button className="nav-button" onClick={handleNext}>
+        <button className="nav-button" onClick={navigateToThirdPlace}>
           Third Place Table →
         </button>
       </div>
-
-      <ThirdPlaceModal
-        isOpen={isModalOpen}
-        onClose={() => setIsModalOpen(false)}
-        thirdPlaceTeams={thirdPlaceTeams}
-        onOrderChange={handleThirdPlaceOrderChange}
-      />
     </div>
   );
 }
 
-export default App;
+export default function App() {
+  return (
+    <Router>
+      <Routes>
+        <Route path="/" element={<HomeContent />} />
+        <Route path="/third-place" element={<ThirdPlacePage />} />
+        <Route path="/round-of-32" element={<RoundOf32 />} />
+      </Routes>
+    </Router>
+  );
+}
+

@@ -1,0 +1,44 @@
+.replica-page {
+  padding: 20px;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.replica-header {
+  display: flex;
+  gap: 24px;
+  align-items: center;
+  background: var(--bg-secondary);
+  border: 1px solid var(--border-primary);
+  padding: 28px;
+  border-radius: 14px;
+  box-shadow: 0 6px 24px var(--shadow-primary);
+}
+
+.replica-left {
+  flex: 1;
+}
+
+.replica-title {
+  margin: 0 0 8px 0;
+  font-size: 34px;
+  color: var(--text-primary);
+  text-transform: uppercase;
+}
+
+.replica-sub { color: var(--text-secondary); }
+
+.card-list {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 16px;
+  margin-top: 20px;
+}
+
+.card {
+  background: var(--bg-primary);
+  border: 1px solid var(--border-primary);
+  padding: 12px;
+  border-radius: 12px;
+  box-shadow: 0 6px 14px var(--shadow-primary);
+}
