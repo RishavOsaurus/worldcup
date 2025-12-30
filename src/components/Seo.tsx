@@ -1,5 +1,6 @@
 import { useEffect } from 'react';
 import type { ReactNode } from 'react';
+import defaultSeoTags from '../data/seoTags';
 
 type SeoProps = {
   title: string;
@@ -7,6 +8,7 @@ type SeoProps = {
   url?: string;
   image?: string;
   keywords?: string;
+  tags?: string[]; // additional search tags
   children?: ReactNode; // optional JSON-LD or extras
 };
 
@@ -22,13 +24,22 @@ function upsertMeta(attr: 'name' | 'property', key: string, content: string | un
   el.setAttribute('content', content);
 }
 
-export default function Seo({ title, description, url = '/', image = '/image.png', keywords }: SeoProps) {
+export default function Seo({ title, description, url = '/', image = '/image.png', keywords, tags }: SeoProps) {
   useEffect(() => {
     const prevTitle = document.title;
     document.title = title;
 
+    // combine provided keywords and tags with default SEO tags into a single keywords string
+    const providedTags = tags && tags.length ? tags : [];
+    const mergedTags = Array.from(new Set([...providedTags, ...defaultSeoTags]));
+    const keywordParts = [] as string[];
+    if (keywords && keywords.trim()) keywordParts.push(keywords.trim());
+    if (mergedTags.length) keywordParts.push(mergedTags.join(', '));
+    const keywordsStr = keywordParts.join(', ');
+
     upsertMeta('name', 'description', description);
-    if (keywords) upsertMeta('name', 'keywords', keywords);
+    if (keywordsStr) upsertMeta('name', 'keywords', keywordsStr);
+    if (keywordsStr) upsertMeta('name', 'news_keywords', keywordsStr);
     upsertMeta('name', 'author', 'WorldCup Replica');
     upsertMeta('name', 'theme-color', '#ffffff');
 
@@ -57,13 +68,14 @@ export default function Seo({ title, description, url = '/', image = '/image.png
     // JSON-LD (simple WebPage entry)
     const ldId = 'seo-json-ld';
     let ld = document.getElementById(ldId) as HTMLScriptElement | null;
-    const ldObj = {
+    const ldObj: Record<string, unknown> = {
       '@context': 'https://schema.org',
       '@type': 'WebPage',
       'name': title,
       'description': description,
       'url': url,
     };
+    if (keywordsStr) ldObj['keywords'] = keywordsStr;
     if (!ld) {
       ld = document.createElement('script');
       ld.type = 'application/ld+json';
@@ -75,7 +87,7 @@ export default function Seo({ title, description, url = '/', image = '/image.png
     return () => {
       document.title = prevTitle;
     };
-  }, [title, description, url, image, keywords]);
+  }, [title, description, url, image, keywords, tags]);
 
   return null;
 }

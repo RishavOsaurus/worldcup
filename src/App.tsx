@@ -87,6 +87,7 @@ function HomeContent() {
         url="/"
         image="/image.png"
         keywords="World Cup, FIFA 2026, group stage, bracket, third place, knockouts"
+        tags={["worldcup","world cup predictor","world cup","worldcup predictor","football bracket","soccer bracket","worldcup 2026"]}
       />
       <header className="app-header">
         <div className="header-content">

@@ -280,6 +280,7 @@ export default function ThirdPlacePage() {
         url="/third-place"
         image="/image.png"
         keywords="third place, World Cup, bracket, round of 32"
+        tags={["worldcup","third place","world cup predictor","soccer","football bracket"]}
       />
       <header className="replica-header">
         <div className="replica-left">

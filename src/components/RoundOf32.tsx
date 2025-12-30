@@ -271,6 +271,7 @@ export default function RoundOf32() {
         url="/round-of-32"
         image="/image.png"
         keywords="round of 32, knockouts, World Cup, bracket"
+        tags={["worldcup","knockouts","world cup predictor","bracket","soccer"]}
       />
       <header className="replica-header">
         <div className="replica-left">
