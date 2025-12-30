@@ -128,7 +128,7 @@ export default function ThirdPlacePage() {
         console.log('Using top 8 third-place teams for mapping:', selectedTokens);
 
         // fetch the JSON mapping (pre-generated from CSV)
-        const res = await fetch('/group_combo.json');
+        const res = await fetch(`${import.meta.env.BASE_URL}group_combo.json`);
         if (!res.ok) return;
         const combos = await res.json(); // array of objects
 
@@ -214,7 +214,7 @@ export default function ThirdPlacePage() {
       }
 
       // try to match combo mapping from precomputed JSON
-      const res = await fetch('/group_combo.json');
+      const res = await fetch(`${import.meta.env.BASE_URL}group_combo.json`);
       const combos = res.ok ? await res.json() : null;
       // Use only the first 8 teams as the qualified third-place teams
       const top8 = (draftTeams || teams).slice(0, 8);
