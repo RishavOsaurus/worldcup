@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" width="64" height="64">
+  <title>Football</title>
+  <defs>
+    <style><![CDATA[
+      .bg{fill:#ffffff}
+      .panel{fill:#000000}
+      .stroke{fill:none;stroke:#000;stroke-width:1}
+    ]]></style>
+  </defs>
+  <circle class="bg" cx="32" cy="32" r="30" stroke="#000" stroke-width="1"/>
+  <!-- central pentagon -->
+  <path class="panel" d="M32 20 L37.3 26.6 L34.6 34.5 L29.4 34.5 L26.7 26.6 Z" />
+  <!-- surrounding panels (stylized) -->
+  <path class="panel" d="M37.3 26.6 L44.6 28.5 L41.0 34.0 L34.6 34.5 Z" />
+  <path class="panel" d="M29.4 34.5 L24.0 39.9 L18.5 36.3 L26.7 26.6 Z" />
+  <path class="panel" d="M34.6 34.5 L41.0 34.0 L39.0 41.5 L32 44 L29.4 34.5 Z" />
+  <path class="panel" d="M26.7 26.6 L24.0 19.7 L32 20 L37.3 26.6 Z" />
+  <!-- simple seams -->
+  <path class="stroke" d="M32 2 L32 62" />
+  <path class="stroke" d="M2 32 L62 32" />
+  <path class="stroke" d="M10 10 L54 54" />
+  <path class="stroke" d="M54 10 L10 54" />
+</svg>
